@@ -23,6 +23,7 @@ button {
 }
 
 @media screen and (min-width: 460px) {
+
   body,
   input,
   textarea {

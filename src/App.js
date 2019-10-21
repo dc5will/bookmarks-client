@@ -1,26 +1,50 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    page: "list",
+    error: null
+  };
+
+  changePage = page => {
+    this.setState({ page });
+  };
+
+  setBookmarks = bookmarks => {
+    this.setState({
+      bookmarks,
+      error: null,
+      page: "list"
+    });
+  };
+
+  addBookmark = bookmark => {
+    this.setState({
+      bookmarks: [...this.state.bookmarks, bookmark]
+    });
+  };
+
+  componentDidMount() {
+    fetch(URL)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error(res.status);
+        }
+        return res.json();
+      })
+      .then(this.setBookmarks)
+      .catch(error => this.setState({ error }));
+  }
+
+  render() {
+    return (
+      <main className="App">
+        <h1>Bookmarks!</h1>
+        <p>testing 123</p>
+      </main>
+    );
+  }
 }
 
 export default App;
